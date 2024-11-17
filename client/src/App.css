@@ -1,0 +1,41 @@
+.App {
+  text-align: center;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+}
+
+.datos {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 20px auto;
+  text-align: left;
+}
+
+.datos label {
+  margin-bottom: 10px;
+}
+
+.datos input {
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.datos button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.datos button:hover {
+  background-color: #45a049;
+}
