@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from 'sweetalert2';
+import routes from '../routes/routes';
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -11,13 +12,13 @@ function Register() {
   const navigate = useNavigate();
 
   const handleRegister = () => {
-    Axios.post(`${API_URL}/register`, {
+    Axios.post(`${API_URL}/Register`, {
       username,
       password,
     })
       .then(() => {
         Swal.fire('¡Registro exitoso!', 'Ahora puedes iniciar sesión', 'success');
-        navigate('/login'); // Redirigir al login
+        navigate(routes.login);
       })
       .catch((error) => {
         Swal.fire('Error', error.response.data.message || 'No se pudo registrar', 'error');
@@ -51,7 +52,7 @@ function Register() {
         Registrarme
       </button>
       <p className="mt-3">
-        ¿Ya tienes cuenta? <a href="/login">Inicia sesión aquí</a>
+        ¿Ya tienes cuenta? <a href="/Login">Inicia sesión aquí</a>
       </p>
     </div>
   );

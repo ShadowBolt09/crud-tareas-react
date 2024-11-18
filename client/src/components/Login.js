@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from 'sweetalert2';
+import routes from '../routes/routes';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -11,15 +12,15 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    Axios.post(`${API_URL}/login`, {
+    Axios.post(`${API_URL}/Login`, {
       username,
       password,
     })
       .then((response) => {
         const { token } = response.data;
-        localStorage.setItem('token', token); // Guardar el token
+        localStorage.setItem('token', token);
         Swal.fire('¡Inicio de sesión exitoso!', 'Bienvenido', 'success');
-        navigate('/tasks'); // Redirigir al CRUD
+        navigate(routes.tareas);
       })
       .catch((error) => {
         Swal.fire('Error', error.response.data.message || 'Credenciales inválidas', 'error');
@@ -53,7 +54,7 @@ function Login() {
         Iniciar Sesión
       </button>
       <p className="mt-3">
-        ¿No tienes cuenta? <a href="/register">Regístrate aquí</a>
+        ¿No tienes cuenta? <a href={routes.register}>Regístrate aquí</a>
       </p>
     </div>
   );

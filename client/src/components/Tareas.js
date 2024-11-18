@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from 'sweetalert2';
 
 function Tareas() {
-  const navigate = useNavigate(); // Hook para redirigir
+  const navigate = useNavigate();
   const [id, setId] = useState();
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
@@ -14,11 +14,11 @@ function Tareas() {
   const [Editar, setEditar] = useState(false);
   const API_URL = process.env.REACT_APP_API_URL;
 
-  // Verifica si el usuario está autenticado, si no redirige a Login
+  
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem('authToken'); // Ejemplo de autenticación
+    const isAuthenticated = localStorage.getItem('token');
     if (!isAuthenticated) {
-      navigate('/login'); // Redirige al login si no está autenticado
+      navigate('/Login');
     }
   }, [navigate]);
 
