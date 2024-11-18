@@ -121,7 +121,18 @@ app.delete('/delete/:id', (req, res) => {
   });
 });
 
+const path = require('path');
 
-app.listen(3001, () => {
-  console.log('Corriendo en el puerto 3001');
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
+
+const port = process.env.PORT || 3001;
+app.listen(port, () => {
+  console.log(`Servidor corriendo en el puerto ${port}`);
 });
