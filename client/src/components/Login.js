@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Form, Button, Container } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import routes from '../routes/routes';
 
@@ -11,7 +12,9 @@ function Login() {
   const API_URL = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
+
     Axios.post(`${API_URL}/Login`, {
       username,
       password,
@@ -23,40 +26,43 @@ function Login() {
         navigate(routes.tareas);
       })
       .catch((error) => {
-        Swal.fire('Error', error.response.data.message || 'Credenciales inválidas', 'error');
+        Swal.fire('Error', error.response?.data?.message || 'Credenciales inválidas', 'error');
       });
   };
 
   return (
-    <div className="container mt-5">
-      <h2 className="text-center">Iniciar Sesión</h2>
-      <div className="form-group">
-        <label>Usuario:</label>
-        <input
-          type="text"
-          className="form-control"
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
-          placeholder="Ingrese su usuario"
-        />
+    <Container className="mt-5" style={{ maxWidth: '400px' }}>
+      <h2 className="text-center mb-4">Iniciar Sesión</h2>
+      <Form onSubmit={handleLogin}>
+        <Form.Group controlId="formUsername">
+          <Form.Label>Nombre de Usuario</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Ingresa tu nombre de usuario"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formPassword" className="mt-3">
+          <Form.Label>Contraseña</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Ingresa tu contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit" className="mt-4 w-100">
+          Iniciar Sesión
+        </Button>
+      </Form>
+      <div className="mt-3 text-center">
+        ¿No tienes una cuenta?{' '}
+        <Link to={routes.register}>Regístrate aquí</Link>
       </div>
-      <div className="form-group mt-3">
-        <label>Contraseña:</label>
-        <input
-          type="password"
-          className="form-control"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          placeholder="Ingrese su contraseña"
-        />
-      </div>
-      <button className="btn btn-primary mt-4" onClick={handleLogin}>
-        Iniciar Sesión
-      </button>
-      <p className="mt-3">
-        ¿No tienes cuenta? <a href={routes.register}>Regístrate aquí</a>
-      </p>
-    </div>
+    </Container>
   );
 }
 
